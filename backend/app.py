@@ -36,14 +36,8 @@ def upload():
     results['duplicates'], ds = duplicated(df)
     spd = SpecialMissingValues(df)
     results['sp_missing_values'] = {'Info': spd[0], 'InfoNan': spd[1], 'Code': spd[2], 'Code_Nan':spd[3],'splmissCols':spd[4],'missingPer':spd[5]}
-    for col in spd[4]:  
-        if df[col].dtype in ['float64', 'int64']:  
-            df[col].fillna(df[col].mean(), inplace=True)
     spd = missing_values(df)
     results['missing_values'] = {'Info': spd[0],  'Code': spd[1],'missCols':spd[2], 'missPer':spd[3]}
-    for col in spd[2]:  
-        if df[col].dtype in ['float64', 'int64']: 
-            df[col].fillna(df[col].mean(), inplace=True)
     results['heatmap'] = generate_heatmap(df)
     results['correlated'] = correlated(df)
     results['bargraph_miss'] = generate_bargraph_missing_values(df)
@@ -63,7 +57,7 @@ def upload():
     results['hum_friendly'] = {'Info': humf[0], 'Code': humf[1], 'plot': generate_bargraph_human_friendly(df)}
     outl = Outliers(df)
     results['outliers'] = {'Info': outl[0], 'Suggestion': outl[1], 'Code': outl[2], 'plot': generate_boxplot(df)}
-    results['data'] = df.to_dict(orient='records')
+    # print(generate_boxplot(df))
     j = jsonify(results)
     print("-------------------------------------------")
     print(j)    
@@ -124,6 +118,34 @@ def refactor_class_imbalance_endpoint():
     global results
     df = refactor_class_imbal(df)
     return jsonify({"message": "Class imbalance has been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/special-characters', methods=['POST'])
+def refactor_special_characters_endpoint():
+    global df
+    global results
+    df=refactor_special_char(df)
+    return jsonify({"message": "Special Characters has been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/human-friendly', methods=['POST'])
+def refactor_human_friendly_endpoint():
+    global df
+    global results
+    df=refactor_human_friendly(df)
+    return jsonify({"message": "Human friendly has been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/trailing-spaces', methods=['POST'])
+def refactor_trailing_spaces_endpoint():
+    global df
+    global results
+    df=refactor_trailing_spaces(df)
+    return jsonify({"message": "Ttrailing Spaces has been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/outliers', methods=['POST'])
+def refactor_outliers_endpoint():
+    global df
+    global results
+    df=refactor_outliers(df)
+    return jsonify({"message": "Outliers has been refactored", "data": df.to_dict(orient="records")}), 200
 
 # @Use: Converts Excel Column Number to Column Name
 def excelColnoToColNo(cn:str) :

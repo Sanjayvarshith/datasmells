@@ -70,6 +70,24 @@ def generate_bargraph_special_characters(df):
     except Exception as e:
         # print(e)
         return None
+    
+
+def refactor_special_char(df):
+    try:
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                pattern = re.compile('[^A-Za-z0-9\s]+')
+                match = pattern.search(df[col].iloc[0])
+                if match:
+                    # Remove special characters
+                    df[col] = df[col].str.replace('[^A-Za-z0-9\s]+', '', regex=True)
+                    # Remove leading and trailing spaces
+                    df[col] = df[col].str.strip()
+                    # Convert to lowercase
+                    df[col] = df[col].str.lower()
+        return df
+    except Exception as e:
+        return df
 
 # Detecting Trailng Spaces
 '''# create a list to store the column names with trailing spaces
@@ -126,6 +144,18 @@ def trailing_spaces(df):
         # print(e)
     return s, code
 
+def refactor_trailing_spaces(df):
+    try:
+        # Loop through each column and remove trailing spaces from string columns
+        for col in df.columns:
+            if df[col].dtype == 'object':  # Only consider object (string) columns
+                df[col] = df[col].str.strip()  # Remove leading and trailing spaces
+        return df
+    except Exception as e:
+        # If any exception occurs, return the original dataframe
+        return df
+
+
 # @Description: This function generates a bargraph for the number of trailing spaces in each feature.
 def generate_bargraph_trailing_spaces(df):
     global trailing_spaces_present
@@ -177,6 +207,18 @@ for col in df.columns:
     else:
         s = "There are no human-friendly formats in the dataset."
     return s, code
+
+def refactor_human_friendly(df):
+    try:
+        pattern = r'^\d{1,3}(,\d{3})*(\.\d+)?$'
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                if df[col].str.match(pattern).all():
+                    # Remove commas and convert to float
+                    df[col] = df[col].str.replace(',', '').astype(float)
+        return df
+    except Exception as e:
+        return df
 
 def generate_bargraph_human_friendly(df):
     if not human_friendly_present:

@@ -90,3 +90,19 @@ for col in df.columns:
     instr += sugg
     return instr, sugg, code
 
+
+
+def refactor_outliers(df):
+    try:
+        # Loop through each column to detect and remove outliers for numerical columns
+        for col in df.columns:
+            if df[col].dtype == np.float64 or df[col].dtype == np.int64:
+                # Calculate the mean and standard deviation for outlier detection
+                mean = df[col].mean()
+                std_dev = df[col].std()
+                # Remove the outliers based on the 3-sigma rule
+                df = df[(df[col] >= mean - 3 * std_dev) & (df[col] <= mean + 3 * std_dev)]
+        return df
+    except Exception as e:
+        # In case of any exception, return the original dataframe
+        return df

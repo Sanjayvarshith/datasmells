@@ -56,6 +56,7 @@ export default function MainPage() {
     axios
       .post("http://127.0.0.1:5000/upload", formData)
       .then((response) => {
+        console.log(response.data);
         setAnalysisData(response.data);
         setHeatmapData(response.data.heatmap);
         setBargraph_sp_miss(response.data.bargraph_sp_miss);
@@ -168,16 +169,6 @@ export default function MainPage() {
     .catch(error => {
       console.log(error);
     });
-  };
-  const handleRefactorMissingSpaces = () => {
-    axios.post("http://127.0.0.1:5000/refactor/missing-spaces")
-      .then(response => {
-        console.log("Missing spaces", response.data);
-        // Handle response data
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
   const handleRefactorDuplicateValues = () => {
     axios.post("http://127.0.0.1:5000/refactor/duplicate-values")
@@ -553,11 +544,6 @@ export default function MainPage() {
               <div className="col-md-4 mb-3">
                 <button className="btn btn-secondary w-100" onClick={handleRefactorTrailingSpaces}>
                   Refactor Trailing Spaces
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorMissingSpaces}>
-                  Refactor Missing Values
                 </button>
               </div>
               <div className="col-md-4 mb-3">
