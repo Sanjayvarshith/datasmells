@@ -20,21 +20,20 @@ import pandas as pd, numpy as np, io, base64, matplotlib.pyplot as plt, seaborn 
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-
-
+results = {}
 
 # route http posts to this method
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['file']
     global df
+    global results
     df = pd.read_csv(file)
     print(df)
-    results = {}
     results['num_rows'] = len(df)
     results['num_cols'] = len(df.columns)
     results['column_names'] = list(df.columns)
-    results['duplicates'], df = duplicated(df)
+    results['duplicates'], ds = duplicated(df)
     spd = SpecialMissingValues(df)
     results['sp_missing_values'] = {'Info': spd[0], 'InfoNan': spd[1], 'Code': spd[2], 'Code_Nan':spd[3],'splmissCols':spd[4],'missingPer':spd[5]}
     for col in spd[4]:  
@@ -64,11 +63,67 @@ def upload():
     results['hum_friendly'] = {'Info': humf[0], 'Code': humf[1], 'plot': generate_bargraph_human_friendly(df)}
     outl = Outliers(df)
     results['outliers'] = {'Info': outl[0], 'Suggestion': outl[1], 'Code': outl[2], 'plot': generate_boxplot(df)}
+    results['data'] = df.to_dict(orient='records')
     j = jsonify(results)
-    # print(j)    
+    print("-------------------------------------------")
+    print(j)    
     return j
 
 
+@app.route('/refactor/special-missing-values', methods=['POST'])
+def refactor_special_missing_values_endpoint():
+    global df
+    global results
+    spd = SpecialMissingValues(df)
+    results['sp_missing_values'] = {'Info': spd[0], 'InfoNan': spd[1], 'Code': spd[2], 'Code_Nan':spd[3],'splmissCols':spd[4],'missingPer':spd[5]}
+    for col in spd[4]:
+        if df[col].dtype in ['float64', 'int64']:
+            df[col].fillna(df[col].mean(), inplace=True)
+        elif df[col].dtype == 'object':
+            most_frequent = df[col].mode().iloc[0]
+            df[col].fillna(most_frequent, inplace=True)
+    print(df)
+    return jsonify({"message": "Special missing values have been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/missing-values', methods=['POST'])
+def refactor_missing_values_endpoint():
+    global df
+    global results
+
+    spd = missing_values(df)
+    results['missing_values'] = {'Info': spd[0],'Code': spd[1],'missCols': spd[2],'missPer': spd[3]}
+    
+    for col in spd[2]:
+        if df[col].dtype in ['float64', 'int64']:
+            df[col].fillna(df[col].mean(), inplace=True)
+        elif df[col].dtype == 'object':
+            most_frequent = df[col].mode().iloc[0]
+            df[col].fillna(most_frequent, inplace=True)
+    
+    print(df)
+    return jsonify({"message": "Missing values have been refactored", "data": df.to_dict(orient="records")}), 200
+
+
+@app.route('/refactor/duplicate-values', methods=['POST'])
+def refactor_duplicate_values_endpoint():
+    global df
+    global results
+    results['duplicates'], df = duplicated(df)
+    return jsonify({"message": "Duplicate values have been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/binning-categorical', methods=['POST'])
+def refactor_binning_categorical_endpoint():
+    global df
+    global results
+    df=refactor_binning_cat(df)
+    return jsonify({"message": "Binning categorical values have been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/class-imbalance', methods=['POST'])
+def refactor_class_imbalance_endpoint():
+    global df
+    global results
+    df = refactor_class_imbal(df)
+    return jsonify({"message": "Class imbalance has been refactored", "data": df.to_dict(orient="records")}), 200
 
 # @Use: Converts Excel Column Number to Column Name
 def excelColnoToColNo(cn:str) :

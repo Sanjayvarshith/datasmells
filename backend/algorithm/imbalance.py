@@ -4,6 +4,8 @@
 
 
 import numpy as np, matplotlib.pyplot as plt, io, base64
+import pandas as pd
+from sklearn.utils import resample
 
 '''for col in df.columns:
     # check if the column is categorical
@@ -65,6 +67,26 @@ for col in df.columns:
 
     return s, code, binCols, unqVals
 
+
+def refactor_binning_cat(df):
+    present = False
+    binCols = []
+    unqVals = []
+    s = ''; code = '' 
+    # for each column, check if the column is categorical
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            unique_vals = len(df[col].unique())
+            threshold = 10
+            if unique_vals > threshold:
+                # create a list of the top 10 most frequent categories
+                top_10 = df[col].value_counts().sort_values(ascending=False).head(10).index
+                # replace all other categories with 'Other'
+                df[col] = np.where(df[col].isin(top_10), df[col], 'Other')
+                print(df[col].value_counts())
+                print()
+    return df
+
 '''Refer this:
 imb = False; nu = 1
 # Check for class imbalance
@@ -125,6 +147,34 @@ def class_imbal(df, threshold = 0.1):
         No mitigation strategies are required.\n'''
 
     return s, code, imbCols, imbRatio
+
+def refactor_class_imbal(df, threshold=0.1):
+    imbCols = []
+    
+    for col in df.columns:
+        class_counts = df[col].value_counts()
+        if class_counts.min() / class_counts.max() < threshold and len(df[col].unique()) != len(df):
+            imbCols.append(col)
+            # Resampling to handle class imbalance
+            major_class = class_counts.idxmax()
+            minor_class = class_counts.idxmin()
+
+            # Separate the majority and minority classes
+            df_majority = df[df[col] == major_class]
+            df_minority = df[df[col] == minor_class]
+
+            # Upsample the minority class to match the majority class size
+            df_minority_upsampled = resample(df_minority,
+                                             replace=True,  # Sample with replacement
+                                             n_samples=len(df_majority),  # Match the majority class size
+                                             random_state=42)  # For reproducibility
+
+            # Combine the majority class with the upsampled minority class
+            df = pd.concat([df_majority, df_minority_upsampled])
+
+    return df
+
+
 
 def generate_bargraph_class_imbal(df, threshold = 0.1):
     # The bar graph show show the ratio of max_count/(min_count + 1) for culprit columns
