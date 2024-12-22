@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 import Codebox from "../Codebox";
 import Table from "./Table";
 import { RegExForm } from "../RegularExpression/form";
+import { Row,Col } from "react-bootstrap";
 
 const language = "python";
 export default function MainPage() {
@@ -81,7 +82,125 @@ export default function MainPage() {
       pdf.save("page-content.pdf");
     });
   };
-
+  const handleRefactorAll = () => {
+    axios.post("http://127.0.0.1:5000/refactor/all")
+      .then(response => {
+        console.log("Refactor all data smells", response.data);
+        // Handle response data
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
+  const handleRefactorSpecialMissingValues = () => {
+    axios.post("http://127.0.0.1:5000/refactor/special-missing-values")
+    .then(response => {
+      console.log("Refactor special missing values", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  
+  const handleRefactorMissingValues = () => {
+    axios.post("http://127.0.0.1:5000/refactor/missing-values")
+    .then(response => {
+      console.log("Refactor missing values", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  
+  const handleRefactorBinningCategorical = () => {
+    axios.post("http://127.0.0.1:5000/refactor/binning-categorical")
+    .then(response => {
+      console.log("Refactor binning categorical", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  
+  const handleRefactorClassImbalance = () => {
+    axios.post("http://127.0.0.1:5000/refactor/class-imbalance")
+    .then(response => {
+      console.log("Refactor class imbalance", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  
+  const handleRefactorSpecialCharacters = () => {
+    axios.post("http://127.0.0.1:5000/refactor/special-characters")
+    .then(response => {
+      console.log("Refactor special characters", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  
+  const handleRefactorHumanFriendly = () => {
+    axios.post("http://127.0.0.1:5000/refactor/human-friendly")
+      .then(response => {
+        console.log("Refactor human friendly", response.data);
+        // Handle response data
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
+  const handleRefactorTrailingSpaces = () => {
+    axios.post("http://127.0.0.1:5000/refactor/trailing-spaces")
+    .then(response => {
+      console.log("Refactor trailing spaces", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
+  const handleRefactorMissingSpaces = () => {
+    axios.post("http://127.0.0.1:5000/refactor/missing-spaces")
+      .then(response => {
+        console.log("Missing spaces", response.data);
+        // Handle response data
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const handleRefactorDuplicateValues = () => {
+    axios.post("http://127.0.0.1:5000/refactor/duplicate-values")
+      .then(response => {
+        console.log("Refactor duplicate values", response.data);
+        // Handle response data
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
+  const handleRefactorOutliers = () => {
+    axios.post("http://127.0.0.1:5000/refactor/outliers")
+      .then(response => {
+        console.log("Refactor outliers", response.data);
+        // Handle response data
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
   // const handleDownload = () => {
   //   setIsLoading(true); // off it when the pdf is downloaded, i.e after the pdf is saved
   //   const pdf = new jsPDF();
@@ -392,9 +511,66 @@ export default function MainPage() {
                 )}
               </ul>
             </div>
-            <button className="download-btn" onClick={handleDownload}>
+            <button className="download-btn" onClick={handleDownload} >
               Download Results as PDF
             </button>
+            <div className="row mt-3">
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorAll}>
+                  Refactor All Smells
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorSpecialMissingValues}>
+                  Refactor Special Missing Values
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorMissingValues}>
+                  Refactor Missing Values
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorBinningCategorical}>
+                Refactor Binning Categorical
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorClassImbalance}>
+                  Refactor Class Imbalance
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorSpecialCharacters}>
+                  Refactor Special Characters
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorHumanFriendly}>
+                  Refactor Human Friendly
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorTrailingSpaces}>
+                  Refactor Trailing Spaces
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorMissingSpaces}>
+                  Refactor Missing Values
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorDuplicateValues}>
+                  Refactor Duplicate Values
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleRefactorOutliers}>
+                  Refactor Outliers
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
