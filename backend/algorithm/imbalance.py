@@ -27,7 +27,7 @@ def binning_cat(df):
             # check the number of unique values
             unique_vals = len(df[col].unique())
             # set a threshold for high cardinality
-            threshold = 10
+            threshold = 20
             if unique_vals > threshold:
                 binCols.append(col)
                 unqVals.append(str(unique_vals))

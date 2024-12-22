@@ -29,10 +29,12 @@ def upload():
     file = request.files['file']
     global df
     df = pd.read_csv(file)
+    print(df)
     results = {}
     results['num_rows'] = len(df)
     results['num_cols'] = len(df.columns)
     results['column_names'] = list(df.columns)
+    results['duplicates'], df = duplicated(df)
     spd = SpecialMissingValues(df)
     results['sp_missing_values'] = {'Info': spd[0], 'InfoNan': spd[1], 'Code': spd[2], 'Code_Nan':spd[3],'splmissCols':spd[4],'missingPer':spd[5]}
     for col in spd[4]:  
@@ -43,13 +45,12 @@ def upload():
     for col in spd[2]:  
         if df[col].dtype in ['float64', 'int64']: 
             df[col].fillna(df[col].mean(), inplace=True)
-    print(df);
     results['heatmap'] = generate_heatmap(df)
     results['correlated'] = correlated(df)
     results['bargraph_miss'] = generate_bargraph_missing_values(df)
     results['bargraph_sp_miss'] = generate_bargraph_special_missing_values(df)
     results['bargraph_nan'] = generate_bargraph_nan_values(df)
-    results['duplicates'] = duplicated(df)
+    print(df)
     bnc = binning_cat(df)
     results['binning_cat'] = {'Info': bnc[0],  'Code': bnc[1], 'binCols': bnc[2], 'unqVals':bnc[3], 'plot': generate_bargraph_binning_cat(df)}
     imb = class_imbal(df)

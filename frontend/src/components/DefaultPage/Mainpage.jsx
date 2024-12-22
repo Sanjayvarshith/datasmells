@@ -221,10 +221,6 @@ export default function MainPage() {
                   )
                 )}
               </ul> */}
-              <Codebox
-                language={language}
-                code={analysisData.missing_values.Code}
-              />
               {bargraph_nan && (
                 <div className="image-box">
                   <img
