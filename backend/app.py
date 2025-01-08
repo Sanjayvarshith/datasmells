@@ -34,6 +34,7 @@ def upload():
     results['num_cols'] = len(df.columns)
     results['column_names'] = list(df.columns)
     results['duplicates'], ds = duplicated(df)
+  
     spd = SpecialMissingValues(df)
     results['sp_missing_values'] = {'Info': spd[0], 'InfoNan': spd[1], 'Code': spd[2], 'Code_Nan':spd[3],'splmissCols':spd[4],'missingPer':spd[5]}
     spd = missing_values(df)
@@ -51,6 +52,8 @@ def upload():
     # Trailng Spaces, Special Characters, Human Friendly
     spcr = detect_special_characters(df)
     results['sp_char'] = {'Info': spcr[0], 'Code': spcr[1], 'plot': generate_bargraph_special_characters(df)}
+    ints=detect_integer_as_string(df)
+    results['int_to_str']= {'Info': ints[0], 'Code': ints[1]}
     trsp = trailing_spaces(df)
     results['tr_spaces'] = {'Info': trsp[0], 'Code': trsp[1], 'plot': generate_bargraph_trailing_spaces(df)}
     humf = human_friendly(df)
@@ -104,6 +107,12 @@ def refactor_duplicate_values_endpoint():
     global results
     results['duplicates'], df = duplicated(df)
     return jsonify({"message": "Duplicate values have been refactored", "data": df.to_dict(orient="records")}), 200
+@app.route('/refactor/int-to-str', methods=['POST'])
+def refactor_int_as_str_endpoint():
+    global df
+    global results
+    df=refactor_integer_as_string(df)
+    return jsonify({"message": "Int as String values have been refactored", "data": df.to_dict(orient="records")}), 200
 
 @app.route('/refactor/binning-categorical', methods=['POST'])
 def refactor_binning_categorical_endpoint():

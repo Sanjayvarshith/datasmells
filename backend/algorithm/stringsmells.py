@@ -3,6 +3,47 @@
 
 import re, matplotlib.pyplot as plt, io, base64, numpy as np, pandas as pd
 
+integer_as_string_present = False
+
+def detect_integer_as_string(df):
+    integer_string_features = []
+    code = ''; s = ''
+    try:
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                # Check each cell in the column for quoted integers
+                def check_cell(cell):
+                    if isinstance(cell, str):
+                        return bool(re.match('^\d+$', cell))
+                    return False
+                
+                if df[col].apply(check_cell).any():
+                    integer_string_features.append(col)
+        
+        if len(integer_string_features) > 0:
+            global integer_as_string_present
+            integer_as_string_present = True
+            s = "There are features with integers stored as strings in the dataset.\n"
+            # ...existing code...
+            s += "Affected features: " + str(integer_string_features[:len(integer_string_features)])
+            if len(integer_string_features) > 8:
+                s += "...\n"
+            else:
+                s += "\n"
+            s += f' Code for refactoring: \n'
+            code += f'''
+    # Convert string integers to proper integer type
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            if df[col].dropna().str.match('^\d+$').all():
+                df[col] = pd.to_numeric(df[col], errors='coerce')
+    '''
+        else:
+            s = "No integers stored as strings detected in the dataset.\n"
+        return s, code
+    except Exception as e:
+        return f"Error in detect_integer_as_string: {str(e)}\n", ""
+
 special_char_present = False
 # @Description: To check for special characters in the dataset
 def detect_special_characters(df):
@@ -89,6 +130,24 @@ def refactor_special_char(df):
     except Exception as e:
         return df
 
+
+def refactor_integer_as_string(df):
+    try:
+        for col in df.columns:
+            if df[col].dtype == 'object':
+                def convert_cell(cell):
+                    if isinstance(cell, str):
+                        # Check if string contains only digits
+                        if cell.strip().isdigit():
+                            return int(cell)
+                    return cell
+                
+                # Apply conversion to each cell individually
+                df[col] = df[col].apply(convert_cell)
+        return df
+    except Exception as e:
+        print(f"Error in refactor_integer_as_string: {str(e)}")
+        return df
 # Detecting Trailng Spaces
 '''# create a list to store the column names with trailing spaces
 cols_with_trailing_spaces = []
