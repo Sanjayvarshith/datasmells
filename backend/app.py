@@ -13,7 +13,7 @@ import json
 # Datasets/concrete.csv
 df = pd.read_csv('Datasets/concrete.csv')
 
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, Response
 from flask_cors import CORS
 import pandas as pd, numpy as np, io, base64, matplotlib.pyplot as plt, seaborn as sns
 
@@ -78,6 +78,21 @@ def refactor_special_missing_values_endpoint():
             df[col].fillna(most_frequent, inplace=True)
     print(df)
     return jsonify({"message": "Special missing values have been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/download-dataset', methods=['GET'])
+def download_dataset():
+    global df
+    # Ensure df is already refactored or processed if needed
+    if df is not None:
+        # Convert the DataFrame to CSV format
+        csv = df.to_csv(index=False)
+        return Response(
+            csv,
+            mimetype="text/csv",
+            headers={"Content-Disposition": "attachment;filename=refactored_dataset.csv"}
+        )
+    else:
+        return jsonify({"message": "Dataset not found or not refactored yet."}), 400
 
 @app.route('/refactor/missing-values', methods=['POST'])
 def refactor_missing_values_endpoint():

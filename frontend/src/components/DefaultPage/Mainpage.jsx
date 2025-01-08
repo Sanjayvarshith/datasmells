@@ -83,6 +83,22 @@ export default function MainPage() {
       pdf.save("page-content.pdf");
     });
   };
+
+  const downloadDataset = () => {
+    axios
+      .get('http://127.0.0.1:5000/download-dataset')
+      .then((response) => {
+        // Create a Blob from the response
+        const blob = new Blob([response.data], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'refactored_dataset.csv'; // Specify the file name
+        link.click(); // Trigger the download
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleRefactorAll = () => {
     axios.post("http://127.0.0.1:5000/refactor/all")
       .then(response => {
@@ -554,6 +570,11 @@ export default function MainPage() {
               <div className="col-md-4 mb-3">
                 <button className="btn btn-secondary w-100" onClick={handleRefactorOutliers}>
                   Refactor Outliers
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={downloadDataset}>
+                  Dataset Download
                 </button>
               </div>
             </div>
