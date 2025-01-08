@@ -115,7 +115,7 @@ else:
 '''
 class_imbal_present = False
 # @Use: To check for class imbalance in the dataset
-def class_imbal(df, threshold = 0.1):
+def class_imbal(df, threshold = 0.01):
     global class_imbal_present
     s = ''; code = ''; nu = 1
     imbCols = []
@@ -125,7 +125,7 @@ def class_imbal(df, threshold = 0.1):
         class_counts = df[col].value_counts()
         if class_counts.min() / class_counts.max() < threshold and not col in ['Date', 'Time', 'Name' ]:
                 # if all values are unique, then continue
-            if  len(df[col].unique()) == len(df):
+            if  len(df[col].unique()) == len(df) or len(df[col].unique()) >= 5:
                 continue
             class_imbal_present = True
             imbCols.append(col)
@@ -152,6 +152,8 @@ def refactor_class_imbal(df, threshold=0.1):
     imbCols = []
     
     for col in df.columns:
+        if  len(df[col].unique()) == len(df) or len(df[col].unique()) >= 5:
+                continue
         class_counts = df[col].value_counts()
         if class_counts.min() / class_counts.max() < threshold and len(df[col].unique()) != len(df):
             imbCols.append(col)
@@ -166,11 +168,11 @@ def refactor_class_imbal(df, threshold=0.1):
             # Upsample the minority class to match the majority class size
             df_minority_upsampled = resample(df_minority,
                                              replace=True,  # Sample with replacement
-                                             n_samples=len(df_majority),  # Match the majority class size
+                                             n_samples=(len(df_majority)-len(df_minority))/10,  # Match the majority class size
                                              random_state=42)  # For reproducibility
 
             # Combine the majority class with the upsampled minority class
-            df = pd.concat([df_majority, df_minority_upsampled])
+            df = pd.concat([df, df_minority_upsampled])
 
     return df
 

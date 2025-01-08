@@ -10,7 +10,11 @@ def detect_integer_as_string(df):
     code = ''; s = ''
     try:
         for col in df.columns:
+            print("-----------------------*****************----------------------------------")
+            print(type(df[col][1]))
             if df[col].dtype == 'object':
+                print("-----------------------*****************----------------------------------")
+                print(df[col][1])
                 # Check each cell in the column for quoted integers
                 def check_cell(cell):
                     if isinstance(cell, str):
