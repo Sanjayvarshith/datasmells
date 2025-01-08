@@ -131,6 +131,17 @@ export default function MainPage() {
       console.log(error);
     });
   };
+
+  const handleIntToStr = () => {
+    axios.post("http://127.0.0.1:5000/refactor/int-to-str")
+    .then(response => {
+      console.log("Refactor int-to-str", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
   
   const handleRefactorBinningCategorical = () => {
     axios.post("http://127.0.0.1:5000/refactor/binning-categorical")
@@ -518,6 +529,17 @@ export default function MainPage() {
                 )}
               </ul>
             </div>
+            <div className="analysis-details">
+              <h3 className="data-smells-title">{"12)IntegerToString"}</h3>
+              <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.int_to_str.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              <Codebox language={language} code={analysisData.int_to_str.Code} />
+            </div>
             <button className="download-btn" onClick={handleDownload} >
               Download Results as PDF
             </button>
@@ -573,10 +595,17 @@ export default function MainPage() {
                 </button>
               </div>
               <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleIntToStr}>
+                  Refactor Integers as String
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
                 <button className="btn btn-secondary w-100" onClick={downloadDataset}>
                   Dataset Download
                 </button>
               </div>
+              
+
             </div>
           </div>
         </div>
