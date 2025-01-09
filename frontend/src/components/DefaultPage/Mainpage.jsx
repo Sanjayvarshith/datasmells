@@ -142,7 +142,28 @@ export default function MainPage() {
       console.log(error);
     });
   };
+
+  const handleUniqueValues = () => {
+    axios.post("http://127.0.0.1:5000/refactor/unique-values")
+    .then(response => {
+      console.log("Refactor unique-values", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
   
+  const handlebinaryMissingvalues = () => {
+    axios.post("http://127.0.0.1:5000/refactor/binary-missing-values")
+    .then(response => {
+      console.log("Refactor binary-missing-values", response.data);
+      // Handle response data
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
   const handleRefactorBinningCategorical = () => {
     axios.post("http://127.0.0.1:5000/refactor/binning-categorical")
     .then(response => {
@@ -597,6 +618,16 @@ export default function MainPage() {
               <div className="col-md-4 mb-3">
                 <button className="btn btn-secondary w-100" onClick={handleIntToStr}>
                   Refactor Integers as String
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handleUniqueValues}>
+                  Refactor unique values
+                </button>
+              </div>
+              <div className="col-md-4 mb-3">
+                <button className="btn btn-secondary w-100" onClick={handlebinaryMissingvalues}>
+                  Refactor binary missing values
                 </button>
               </div>
               <div className="col-md-4 mb-3">

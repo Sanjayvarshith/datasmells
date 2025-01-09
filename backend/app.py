@@ -171,6 +171,20 @@ def refactor_outliers_endpoint():
     df=refactor_outliers(df)
     return jsonify({"message": "Outliers has been refactored", "data": df.to_dict(orient="records")}), 200
 
+@app.route('/refactor/unique-values', methods=['POST'])
+def refactor_unique_values_endpoint():
+    global df
+    global results
+    # df=refactor_unique_values(df)
+    return jsonify({"message": "unique-values has been refactored", "data": df.to_dict(orient="records")}), 200
+
+@app.route('/refactor/binary-missing-values', methods=['POST'])
+def refactor_binary_missing_values_endpoint():
+    global df
+    global results
+    # df=refactor_binary_missing_values(df)
+    return jsonify({"message": "binary-missing-values has been refactored", "data": df.to_dict(orient="records")}), 200
+
 # @Use: Converts Excel Column Number to Column Name
 def excelColnoToColNo(cn:str) :
     if type(cn)== int or cn.isdigit():
