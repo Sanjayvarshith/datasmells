@@ -1,5 +1,7 @@
 # @Date: 2023-02-26
 # @Description: This program checks for missing values, special missing values and generates a bargraph for the number of special missing values in each feature.
+import matplotlib
+matplotlib.use('Agg')  
 
 import pandas as pd, numpy as np, io, base64, matplotlib.pyplot as plt, seaborn as sns
 

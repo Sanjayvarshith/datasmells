@@ -289,10 +289,56 @@ export default function MainPage() {
           Analysis
         </Button>
       </div>
-
+      {
+        analysisData && (
+          <div className="analysis-container">
+           <Excel myjson={jsonData} />
+           <div className="results">
+              <div className="result">
+                <h2 className="result-title">SPECIAL MISSING VALUES</h2>
+                <Table className="table"
+                col1Arr={analysisData.sp_missing_values.splmissCols}
+                col2Arr={analysisData.sp_missing_values.missingPer}
+                col1={"Column Name"}
+                col2={"Missing Percentage"}
+                smellName={"Special Missing Values"}
+                />
+                {bargraph_sp_miss && (
+                <div className="imageBox">
+                  <img
+                    src={`data:image/png;base64,${bargraph_sp_miss}`}
+                    alt="special missing values"
+                  />
+                  <div className="fig-text"> Special Missing Values</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">MISSING VALUES</h2>
+                <Table className="table"
+                col1Arr={analysisData.missing_values.missCols}
+                col2Arr={analysisData.missing_values.missPer}
+                col1={"Column Name"}
+                col2={"Missing Percentage"}
+                smellName={"Missing Values"}
+              />
+              {bargraph_nan && (
+                <div className="imageBox">
+                  <img
+                    src={`data:image/png;base64,${bargraph_nan}`}
+                    alt="missing values"
+                  />
+                  <div className="fig-text">Missing Values</div>
+                </div>
+              )}
+              </div>
+           </div>
+          </div>
+        )
+      }
       {analysisData && (
         <div className="analysis-container">
-          <Excel myjson={jsonData} />
+          {/* <Excel myjson={jsonData} /> */}
           <div className="results-container">
             <h1 className="analysis-title">Analysis Results</h1>
             <div className="analysis-summary">
