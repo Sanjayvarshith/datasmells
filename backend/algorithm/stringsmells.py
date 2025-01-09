@@ -4,6 +4,99 @@
 import re, matplotlib.pyplot as plt, io, base64, numpy as np, pandas as pd
 
 integer_as_string_present = False
+def detect_binary_missing_values(df):
+    """
+    Detect columns with mostly missing values, but where all non-missing values are 'Y'.
+    This implies that missing values might represent 'N' vs truly missing data.
+    """
+    binary_missing_features = []
+    code = ''
+    s = ''
+    try:
+        for col in df.columns:
+            # Calculate fraction of missing values
+            fraction_missing = df[col].isna().mean()
+            # Check if at least 90% are missing
+            if fraction_missing >= 0.9:
+                non_missing_vals = df[col].dropna().unique()
+                # If all non-missing values are 'Y', consider this a binary missing column
+                if len(non_missing_vals) == 1 and non_missing_vals[0] == 'Y':
+                    binary_missing_features.append(col)
+
+        if binary_missing_features:
+            s = "There are columns with mostly missing values, but the non-missing values are 'Y'.\n"
+            s += "Affected columns: " + str(binary_missing_features[:8])
+            if len(binary_missing_features) > 8:
+                s += "...\n"
+            else:
+                s += "\n"
+            s += "These missing values may implicitly indicate 'N'.\n"
+
+            code += f'''
+# Example refactoring: Convert missing values to 'N' for columns identified
+binary_missing_columns = {binary_missing_features}
+for col in binary_missing_columns:
+    df[col] = df[col].fillna('N')  # Treat missing as 'N'
+'''
+        else:
+            s = "No columns with binary missing values detected.\n"
+        return s, code
+
+    except Exception as e:
+        return f"Error in detect_binary_missing_values: {{str(e)}}\\n", ""
+
+def refactor_binary_missing_values(df):
+    """
+    Refactor columns with binary missing values by filling missing entries with 'N'.
+    """
+    try:
+        for col in df.columns:
+            df[col] = df[col].fillna('N')  # Treat missing as 'N'
+        return df
+    except Exception as e:
+        print(f"Error in refactor_binary_missing_values: {str(e)}")
+        return df
+def detect_unique_values(df):
+    unique_identifier_features = []
+    code = ''
+    s = ''
+    try:
+        for col in df.columns:
+            # Check if column is a unique identifier (all rows distinct)
+            if df[col].nunique() == len(df):
+                unique_identifier_features.append(col)
+
+        if unique_identifier_features:
+            s = "There are columns containing unique identifiers (uids) in the dataset.\n"
+            s += "Affected columns: " + str(unique_identifier_features[:8])
+            if len(unique_identifier_features) > 8:
+                s += "...\n"
+            else:
+                s += "\n"
+            s += "These columns appear to hold a primary key or unique ID.\n"
+
+            code += f'''
+# Example refactoring: drop or manage unique identifier columns
+uid_columns = {unique_identifier_features}
+df = df.drop(columns=uid_columns)  # if not needed
+'''
+        else:
+            s = "No unique identifier columns detected.\n"
+        return s, code
+
+    except Exception as e:
+        return f"Error in detect_unique_values: {str(e)}\n", ""
+
+def refactor_unique_values(df):
+    try:
+        for col in df.columns:
+            if df[col].nunique() == len(df):
+                df = df.drop(columns=[col])
+        return df
+    except Exception as e:
+        print(f"Error in refactor_unique_values: {str(e)}")
+        return df
+
 
 def detect_integer_as_string(df):
     integer_string_features = []

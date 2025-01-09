@@ -144,7 +144,7 @@ export default function MainPage() {
   };
 
   const handleUniqueValues = () => {
-    axios.post("http://127.0.0.1:5000/refactor/unique-values")
+    axios.post("http://127.0.0.1:5000/refactor/unique_values")
     .then(response => {
       console.log("Refactor unique-values", response.data);
       // Handle response data
@@ -560,6 +560,28 @@ export default function MainPage() {
                 )}
               </ul>
               <Codebox language={language} code={analysisData.int_to_str.Code} />
+            </div>
+            <div className="analysis-details">
+              <h3 className="data-smells-title">{"13)Unique Values"}</h3>
+              <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.unique_values.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              <Codebox language={language} code={analysisData.unique_values.Code} />
+            </div>
+            <div className="analysis-details">
+              <h3 className="data-smells-title">{"14)Binary Missing Values"}</h3>
+              <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.binary_missing_values.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              <Codebox language={language} code={analysisData.binary_missing_values.Code} />
             </div>
             <button className="download-btn" onClick={handleDownload} >
               Download Results as PDF

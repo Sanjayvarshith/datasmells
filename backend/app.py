@@ -54,6 +54,10 @@ def upload():
     results['sp_char'] = {'Info': spcr[0], 'Code': spcr[1], 'plot': generate_bargraph_special_characters(df)}
     ints=detect_integer_as_string(df)
     results['int_to_str']= {'Info': ints[0], 'Code': ints[1]}
+    unq = detect_unique_values(df)
+    results['unique_values'] = {'Info': unq[0], 'Code': unq[1]}
+    mis = detect_binary_missing_values(df)
+    results['binary_missing_values'] = {'Info': mis[0], 'Code': mis[1]}
     trsp = trailing_spaces(df)
     results['tr_spaces'] = {'Info': trsp[0], 'Code': trsp[1], 'plot': generate_bargraph_trailing_spaces(df)}
     humf = human_friendly(df)
@@ -171,18 +175,18 @@ def refactor_outliers_endpoint():
     df=refactor_outliers(df)
     return jsonify({"message": "Outliers has been refactored", "data": df.to_dict(orient="records")}), 200
 
-@app.route('/refactor/unique-values', methods=['POST'])
+@app.route('/refactor/unique_values', methods=['POST'])
 def refactor_unique_values_endpoint():
     global df
     global results
-    # df=refactor_unique_values(df)
+    df=refactor_unique_values(df)
     return jsonify({"message": "unique-values has been refactored", "data": df.to_dict(orient="records")}), 200
 
 @app.route('/refactor/binary-missing-values', methods=['POST'])
 def refactor_binary_missing_values_endpoint():
     global df
     global results
-    # df=refactor_binary_missing_values(df)
+    df=refactor_binary_missing_values(df)
     return jsonify({"message": "binary-missing-values has been refactored", "data": df.to_dict(orient="records")}), 200
 
 # @Use: Converts Excel Column Number to Column Name
