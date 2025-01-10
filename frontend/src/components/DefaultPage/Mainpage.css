@@ -15,6 +15,8 @@
     margin: 20px auto;
     padding: 20px;
     display: flex;
+    max-height: 600px;
+    overflow-y: auto;
     flex-direction: column;
     gap: 20px;
     background-color: transparent;
@@ -52,6 +54,12 @@
 .imageBox {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.image-box {
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
