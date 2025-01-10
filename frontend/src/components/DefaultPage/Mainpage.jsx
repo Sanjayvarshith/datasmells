@@ -564,62 +564,15 @@ export default function MainPage() {
               </div>
               </div>
            </div>
+           <div className="d-flex justify-content-center my-2">
+                <button className=" w-100" onClick={downloadDataset}>
+                  Download Refactored Dataset
+                </button>
+              </div>
           </div>
+          
         )
       }
-      {analysisData && (
-        <div className="analysis-container">
-          {/* <Excel myjson={jsonData} /> */}
-          <div className="results-container">
-            <h1 className="analysis-title">Analysis Results</h1>
-            <div className="analysis-summary">
-              <p className="head-text">
-                Number of Rows: {analysisData.num_rows}
-              </p>
-              <p className="head-text">
-                Number of Columns: {analysisData.num_cols}
-              </p>
-              {
-                <p className="head-text">
-                  Column Names:{" "}
-                  <p id="Column-Names">
-                    {analysisData.column_names.join(", ")}
-                  </p>
-                </p>
-              }
-            </div>
-            <button className="download-btn" onClick={handleDownload} >
-              Download Results as PDF
-            </button>
-            <div className="row mt-3">
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorAll}>
-                  Refactor All Smells
-                </button>
-              </div>
-              
-         
-             
-             
-      
-           
-             
-              
-              
-             
-             
-              
-              <div className="d-flex justify-content-center my-2">
-                <button className="btn btn-secondary w-100" onClick={downloadDataset}>
-                  Dataset Download
-                </button>
-              </div>
-              
-
-            </div>
-          </div>
-        </div>
-      )}
       {click && fileChosen && <RegExForm />}
     </div>
   );
