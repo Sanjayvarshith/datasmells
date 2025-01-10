@@ -58,13 +58,13 @@ export const RegExForm = () => {
             />
           </div>
           <div className="d-flex justify-content-center my-2">
-            <Button
+            <button
               type="submit"
-              className="regex-btn align-items-center"
-              variant="success"
+              // className="regex-btn align-items-center"
+              // variant="primary"
             >
               Submit
-            </Button>
+            </button>
           </div>
           {/* {result ? <div>{result}</div> : null} */}
           {result ? (

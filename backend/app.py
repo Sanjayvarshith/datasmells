@@ -20,6 +20,7 @@ import pandas as pd, numpy as np, io, base64, matplotlib.pyplot as plt, seaborn 
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3001"}})
 results = {}
 
 # route http posts to this method

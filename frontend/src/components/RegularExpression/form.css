@@ -5,7 +5,7 @@
 
 .regex-container h1 {
   margin-top: 1rem;
-  color: #066;
+  color: #00BFFF;
   text-align: center;
 }
 
@@ -52,6 +52,6 @@
 
 .regex-btn:hover {
   color: rgb(255, 255, 255);
-  background-color: rgb(17, 97, 73);
+  background-color: #00BFFF;
   box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px, rgb(195 231 202) 0px 0px 0px 3px;
 }

@@ -280,14 +280,11 @@ export default function MainPage() {
           onChange={handleFileUpload}
           className="input-file"
         />
-        <Button
-          className="analyze-btn d-flex align-self-center"
-          variant="success"
-          size="lg"
+        <button
           onClick={handleUpload}
         >
           Analysis
-        </Button>
+        </button>
       </div>
       {
         analysisData && (
@@ -634,67 +631,67 @@ export default function MainPage() {
             </button>
             <div className="row mt-3">
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorAll}>
+                <button onClick={handleRefactorAll}>
                   Refactor All Smells
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorSpecialMissingValues}>
+                <button onClick={handleRefactorSpecialMissingValues}>
                   Refactor Special Missing Values
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorMissingValues}>
+                <button onClick={handleRefactorMissingValues}>
                   Refactor Missing Values
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorBinningCategorical}>
+                <button onClick={handleRefactorBinningCategorical}>
                 Refactor Binning Categorical
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorClassImbalance}>
+                <button onClick={handleRefactorClassImbalance}>
                   Refactor Class Imbalance
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorSpecialCharacters}>
+                <button onClick={handleRefactorSpecialCharacters}>
                   Refactor Special Characters
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorHumanFriendly}>
+                <button onClick={handleRefactorHumanFriendly}>
                   Refactor Human Friendly
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorTrailingSpaces}>
+                <button onClick={handleRefactorTrailingSpaces}>
                   Refactor Trailing Spaces
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorDuplicateValues}>
+                <button onClick={handleRefactorDuplicateValues}>
                   Refactor Duplicate Values
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleRefactorOutliers}>
+                <button onClick={handleRefactorOutliers}>
                   Refactor Outliers
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleIntToStr}>
+                <button onClick={handleIntToStr}>
                   Refactor Integers as String
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handleUniqueValues}>
+                <button onClick={handleUniqueValues}>
                   Refactor unique values
                 </button>
               </div>
               <div className="col-md-4 mb-3">
-                <button className="btn btn-secondary w-100" onClick={handlebinaryMissingvalues}>
+                <button onClick={handlebinaryMissingvalues}>
                   Refactor binary missing values
                 </button>
               </div>
