@@ -290,6 +290,7 @@ export default function MainPage() {
         analysisData && (
           <div className="analysis-container">
            <Excel myjson={jsonData} />
+           <h2 className="smells">IDENTIFIED SMELLS</h2>
            <div className="results">
               <div className="result">
                 <h2 className="result-title">SPECIAL MISSING VALUES</h2>

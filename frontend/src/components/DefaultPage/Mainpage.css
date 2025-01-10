@@ -92,6 +92,19 @@ button:active {
   width: 100%;
 }
 
+.smells{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: -10px;
+  margin: 5px;
+  font-family: italic;
+  color: #00BFFF;
+  font-weight: bold;
+}
+
 .table{
   justify-content: center;
   align-items: center;
