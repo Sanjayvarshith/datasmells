@@ -329,6 +329,176 @@ export default function MainPage() {
                 </div>
               )}
               </div>
+              <div className="result">
+                <h2 className="result-title">BINNING CATEGORICAL</h2>
+                <Table className="table"
+                col1Arr={analysisData.binning_cat.binCols}
+                col2Arr={analysisData.binning_cat.unqVals}
+                col1={"Column Name"}
+                col2={"Unique values"}
+                smellName={"Binning Categorical Columns"}
+              />
+              {bargraph_binning_cat && (
+                <div className="image-box">
+                  <img
+                    src={`data:image/png;base64,${bargraph_binning_cat}`}
+                    alt="binning_categorical"
+                  />
+                  <div className="fig-text">Binning Categorical</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">CLASS IMBALANCE</h2>
+                <Table className="table"
+                col1Arr={analysisData.imbalance.imbCols}
+                col2Arr={analysisData.imbalance.imbRatio}
+                col1={"Column Name"}
+                col2={"Imbalance ratio"}
+                smellName={"Categorical Columns with Class Imbalance"}
+              />
+              {bargraph_class_imbal &&  (
+                <div className="image-box">
+                  <img
+                    src={`data:image/png;base64,${bargraph_class_imbal}`}
+                    alt="class_imbalance"
+                  />
+                  <div className="fig-text"> Class Imbalance</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">SPECIAL CHARACTERS</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.sp_char.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              {bargraph_sp_char && (
+                <div className="image-box">
+                  <img
+                    src={`data:image/png;base64,${bargraph_sp_char}`}
+                    alt="special_characters"
+                  />
+                  <div className="fig-text">{"Special Characters"}</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">HUMAN FRIENDLY</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.hum_friendly.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              {bargraph_hum_friendly && (
+                <div className="image-box">
+                  <img
+                    src={`data:image/png;base64,${bargraph_hum_friendly}`}
+                    alt="hum_friendly"
+                  />
+                  <div className="fig-text"> Human Friendly</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">TRAILING SPACES</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.tr_spaces.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              {bargraph_tr_spaces && (
+                <div className="image-box">
+                  <img
+                    src={`data:image/png;base64,${bargraph_tr_spaces}`}
+                    alt="tr_spaces"
+                  />
+                  <div className="fig-text">{"8) Trailing Spaces"}</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">CORRELATED VALUES</h2>
+                <div className="heatmap-container">
+                {heatmapData && (
+                  <div className="image-box">
+                    <img
+                      src={`data:image/png;base64,${heatmapData}`}
+                      alt="correlation heatmap"
+                    />
+                    <div className="fig-text">Correlation Heatmap</div>
+                  </div>
+                )}
+                <ul className="data-smells-list">
+                  {analysisData.correlated.map((sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  ))}
+                </ul>
+              </div>
+              </div>
+              <div className="result">
+                <h2 className="result-title">Outliers</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.outliers.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              {boxplot && (
+                <div className="img-box">
+                  <img src={`data:image/png;base64,${boxplot}`} alt="boxplot" />
+                  <div className="fig-text">Fig. Boxplot</div>
+                </div>
+              )}
+              </div>
+              <div className="result">
+                <h2 className="result-title">DUPLICATE VALUES</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.duplicates).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              </div>
+              <div className="result">
+                <h2 className="result-title">INTEGER AS STRING</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.int_to_str.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              </div>
+              <div className="result">
+                <h2 className="result-title">UNIQUE VALUES</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.unique_values.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              </div>
+              <div className="result">
+                <h2 className="result-title">BINARY MISSING VALUES</h2>
+                <ul className="data-smells-list">
+                {splitIntoSentences(analysisData.binary_missing_values.Info).map(
+                  (sentence, index) => (
+                    <li key={index}>{sentence}</li>
+                  )
+                )}
+              </ul>
+              </div>
            </div>
           </div>
         )
@@ -353,278 +523,6 @@ export default function MainPage() {
                   </p>
                 </p>
               }
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">1) Special Missing Values</h3>
-              <Table
-                col1Arr={analysisData.sp_missing_values.splmissCols}
-                col2Arr={analysisData.sp_missing_values.missingPer}
-                col1={"Column Name"}
-                col2={"Missing Percentage"}
-                smellName={"Special Missing Values"}
-              />
-              {/* <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.sp_missing_values.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul> */}
-              <Codebox
-                language={language}
-                code={analysisData.sp_missing_values.Code}
-              />
-              {bargraph_sp_miss && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_sp_miss}`}
-                    alt="special missing values"
-                  />
-                  <div className="fig-text"> Special Missing Values</div>
-                </div>
-              )}
-              {/* <h5> NaN Values</h5>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.sp_missing_values.InfoNan).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox
-                language={language}
-                code={analysisData.sp_missing_values.Code_Nan}
-              />
-              {bargraph_nan && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_nan}`}
-                    alt="NaN values"
-                  />
-                  <div className="fig-text">NaN Values</div>
-                </div>
-              )} */}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title"> 2) Missing Values</h3>
-
-              <Table
-                col1Arr={analysisData.missing_values.missCols}
-                col2Arr={analysisData.missing_values.missPer}
-                col1={"Column Name"}
-                col2={"Missing Percentage"}
-                smellName={"Missing Values"}
-              />
-              {/* <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.missing_values.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul> */}
-              {bargraph_nan && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_nan}`}
-                    alt="missing values"
-                  />
-                  <div className="fig-text">Missing Values</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">3) Binning Categorical</h3>
-              <Table
-                col1Arr={analysisData.binning_cat.binCols}
-                col2Arr={analysisData.binning_cat.unqVals}
-                col1={"Column Name"}
-                col2={"Unique values"}
-                smellName={"Binning Categorical Columns"}
-              />
-              <Codebox
-                language={language}
-                code={analysisData.binning_cat.Code}
-              />
-              {bargraph_binning_cat && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_binning_cat}`}
-                    alt="binning_categorical"
-                  />
-                  <div className="fig-text">Binning Categorical</div>
-                </div>
-              )}
-            </div>
-            {/* Class Imbalance */}
-            <div className="analysis-details">
-              <h3 className="data-smells-title">4) Class Imbalance</h3>
-              <Table
-                col1Arr={analysisData.imbalance.imbCols}
-                col2Arr={analysisData.imbalance.imbRatio}
-                col1={"Column Name"}
-                col2={"Imbalance ratio"}
-                smellName={"Categorical Columns with Class Imbalance"}
-              />
-              {/* <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.imbalance.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul> */}
-              <Codebox language={language} code={analysisData.imbalance.Code} />
-              {bargraph_class_imbal && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_class_imbal}`}
-                    alt="class_imbalance"
-                  />
-                  <div className="fig-text"> Class Imbalance</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">5) Special Characters</h3>
-
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.sp_char.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.sp_char.Code} />
-              {bargraph_sp_char && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_sp_char}`}
-                    alt="special_characters"
-                  />
-                  <div className="fig-text">{"Special Characters"}</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"6) Human Friendly"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.hum_friendly.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox
-                language={language}
-                code={analysisData.hum_friendly.Code}
-              />
-              {bargraph_hum_friendly && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_hum_friendly}`}
-                    alt="hum_friendly"
-                  />
-                  <div className="fig-text"> Human Friendly</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"7) Trailing Spaces"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.tr_spaces.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.tr_spaces.Code} />
-              {bargraph_tr_spaces && (
-                <div className="image-box">
-                  <img
-                    src={`data:image/png;base64,${bargraph_tr_spaces}`}
-                    alt="tr_spaces"
-                  />
-                  <div className="fig-text">{"8) Trailing Spaces"}</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"9) Correlated Values"}</h3>
-              <div className="heatmap-container">
-                {heatmapData && (
-                  <div className="image-box">
-                    <img
-                      src={`data:image/png;base64,${heatmapData}`}
-                      alt="correlation heatmap"
-                    />
-                    <div className="fig-text">Correlation Heatmap</div>
-                  </div>
-                )}
-                <ul className="data-smells-list">
-                  {analysisData.correlated.map((sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"10)Outliers"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.outliers.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.outliers.Code} />
-              {boxplot && (
-                <div className="img-box">
-                  <img src={`data:image/png;base64,${boxplot}`} alt="boxplot" />
-                  <div className="fig-text">Fig. Boxplot</div>
-                </div>
-              )}
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"11) Duplicate Values"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.duplicates).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"12)IntegerToString"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.int_to_str.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.int_to_str.Code} />
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"13)Unique Values"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.unique_values.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.unique_values.Code} />
-            </div>
-            <div className="analysis-details">
-              <h3 className="data-smells-title">{"14)Binary Missing Values"}</h3>
-              <ul className="data-smells-list">
-                {splitIntoSentences(analysisData.binary_missing_values.Info).map(
-                  (sentence, index) => (
-                    <li key={index}>{sentence}</li>
-                  )
-                )}
-              </ul>
-              <Codebox language={language} code={analysisData.binary_missing_values.Code} />
             </div>
             <button className="download-btn" onClick={handleDownload} >
               Download Results as PDF
