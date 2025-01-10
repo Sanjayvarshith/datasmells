@@ -309,6 +309,11 @@ export default function MainPage() {
                   <div className="fig-text"> Special Missing Values</div>
                 </div>
               )}
+              <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorSpecialMissingValues}>
+                  Refactor Special Missing Values
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">MISSING VALUES</h2>
@@ -328,6 +333,11 @@ export default function MainPage() {
                   <div className="fig-text">Missing Values</div>
                 </div>
               )}
+                   <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorMissingValues}>
+                  Refactor Missing Values
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">BINNING CATEGORICAL</h2>
@@ -347,6 +357,11 @@ export default function MainPage() {
                   <div className="fig-text">Binning Categorical</div>
                 </div>
               )}
+               <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorBinningCategorical}>
+                Refactor Binning Categorical
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">CLASS IMBALANCE</h2>
@@ -366,6 +381,12 @@ export default function MainPage() {
                   <div className="fig-text"> Class Imbalance</div>
                 </div>
               )}
+               <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorClassImbalance}>
+                  Refactor Class Imbalance
+                </button>
+              </div>
+              
               </div>
               <div className="result">
                 <h2 className="result-title">SPECIAL CHARACTERS</h2>
@@ -385,6 +406,11 @@ export default function MainPage() {
                   <div className="fig-text">{"Special Characters"}</div>
                 </div>
               )}
+                      <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorSpecialCharacters}>
+                  Refactor Special Characters
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">HUMAN FRIENDLY</h2>
@@ -404,6 +430,11 @@ export default function MainPage() {
                   <div className="fig-text"> Human Friendly</div>
                 </div>
               )}
+                 <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorHumanFriendly}>
+                  Refactor Human Friendly
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">TRAILING SPACES</h2>
@@ -423,6 +454,11 @@ export default function MainPage() {
                   <div className="fig-text">{"8) Trailing Spaces"}</div>
                 </div>
               )}
+               <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorTrailingSpaces}>
+                  Refactor Trailing Spaces
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">CORRELATED VALUES</h2>
@@ -458,7 +494,13 @@ export default function MainPage() {
                   <div className="fig-text">Fig. Boxplot</div>
                 </div>
               )}
+                 <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorOutliers}>
+                  Refactor Outliers
+                </button>
               </div>
+              </div>
+           
               <div className="result">
                 <h2 className="result-title">DUPLICATE VALUES</h2>
                 <ul className="data-smells-list">
@@ -468,7 +510,13 @@ export default function MainPage() {
                   )
                 )}
               </ul>
+              <div className="d-flex justify-content-center my-2">
+                <button onClick={handleRefactorDuplicateValues}>
+                  Refactor Duplicate Values
+                </button>
               </div>
+              </div>
+              
               <div className="result">
                 <h2 className="result-title">INTEGER AS STRING</h2>
                 <ul className="data-smells-list">
@@ -478,6 +526,11 @@ export default function MainPage() {
                   )
                 )}
               </ul>
+              <div className="d-flex justify-content-center my-2">
+                <button onClick={handleIntToStr}>
+                  Refactor Integers as String
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">UNIQUE VALUES</h2>
@@ -488,6 +541,11 @@ export default function MainPage() {
                   )
                 )}
               </ul>
+              <div className="d-flex justify-content-center my-2">
+                <button onClick={handleUniqueValues}>
+                  Refactor unique values
+                </button>
+              </div>
               </div>
               <div className="result">
                 <h2 className="result-title">BINARY MISSING VALUES</h2>
@@ -498,6 +556,11 @@ export default function MainPage() {
                   )
                 )}
               </ul>
+              <div className="d-flex justify-content-center my-2">
+                <button onClick={handlebinaryMissingvalues}>
+                  Refactor binary missing values
+                </button>
+              </div>
               </div>
            </div>
           </div>
@@ -533,67 +596,19 @@ export default function MainPage() {
                   Refactor All Smells
                 </button>
               </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorSpecialMissingValues}>
-                  Refactor Special Missing Values
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorMissingValues}>
-                  Refactor Missing Values
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorBinningCategorical}>
-                Refactor Binning Categorical
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorClassImbalance}>
-                  Refactor Class Imbalance
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorSpecialCharacters}>
-                  Refactor Special Characters
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorHumanFriendly}>
-                  Refactor Human Friendly
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorTrailingSpaces}>
-                  Refactor Trailing Spaces
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorDuplicateValues}>
-                  Refactor Duplicate Values
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleRefactorOutliers}>
-                  Refactor Outliers
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleIntToStr}>
-                  Refactor Integers as String
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handleUniqueValues}>
-                  Refactor unique values
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
-                <button onClick={handlebinaryMissingvalues}>
-                  Refactor binary missing values
-                </button>
-              </div>
-              <div className="col-md-4 mb-3">
+              
+         
+             
+             
+      
+           
+             
+              
+              
+             
+             
+              
+              <div className="d-flex justify-content-center my-2">
                 <button className="btn btn-secondary w-100" onClick={downloadDataset}>
                   Dataset Download
                 </button>
